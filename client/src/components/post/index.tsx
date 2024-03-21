@@ -24,7 +24,7 @@ export const Post = (
                 />
                 </Link>
             </div>
-            <div className="text-xl space-y-5 col-span-3">
+            <div className="text-xl space-y-5 col-span-3 capitalize">
                 <Link to={`/post/${_id}`}>
                 <h2 className="text-5xl hover:text-green-700"
                 >{title}</h2>

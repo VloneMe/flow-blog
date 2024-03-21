@@ -1,25 +1,21 @@
-import { Navbar } from "./components/navbar";
-import { Post } from "./components/post";
-import {data} from './constatnts/index.ts';
+import { Routes, Route } from "react-router-dom";
+
+import { Layout } from "./components/layout/index.tsx";
+import { Home } from "./pages/main.tsx";
+import { Login } from "./pages/Login.tsx";
+import { Register } from "./pages/Register.tsx";
 
 export default function App() {
   return (
-    <main className="min-h-screen"
-    >
-      <Navbar />
-      <div className="space-y-6 mt-24"
-      >
-        {data.map((data, index) => (
-          <Post _id={index + 1}
-                src={data.img}
-                title={data.title}
-                author={data.author}
-                summary={data.summary}
-                key={index + 1}
-                date={data.date}
-          />
-        ))}
-      </div>
-    </main>
+    <>
+      <Routes>
+        <Route path="/" element={<Layout />}
+        >
+          <Route index element={<Home />} />
+          <Route path="/login" element={<Login />}/>
+          <Route path="/register" element={<Register />}/>
+        </Route>
+      </Routes>
+    </>
   )
 }
