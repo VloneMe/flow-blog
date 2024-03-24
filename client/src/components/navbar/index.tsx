@@ -52,12 +52,12 @@ export const Navbar = () => {
               }
               {
                 !username && (
-                  <>
+                  <div className="flex items-center space-x-4">
                     <Link to="/login"
                     > login</Link>
                     <Link to="/register"
                     > register</Link>
-                  </>
+                  </div>
                 )
               }
             </div>

@@ -34,7 +34,8 @@ export const Post = (
                 <a className="author">{author}</a>
                 <time>{date}</time>
                 </p>
-                <p>{summary}</p>
+                <p className="text-lg"
+                >{summary}</p>
             </div>
         </div>
     </Container>

@@ -4,6 +4,9 @@ import { Layout } from "./components/layout/index.tsx";
 import { Home } from "./pages/main.tsx";
 import { Login } from "./pages/Login.tsx";
 import { Register } from "./pages/Register.tsx";
+import { CreatePost } from "./components/createPost/index.tsx";
+
+
 
 export default function App() {
   return (
@@ -14,6 +17,7 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="/login" element={<Login />}/>
           <Route path="/register" element={<Register />}/>
+          <Route path="/create" element={<CreatePost />}/>
         </Route>
       </Routes>
     </>

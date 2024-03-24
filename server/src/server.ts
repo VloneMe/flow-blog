@@ -3,6 +3,8 @@ const dotenv = require('dotenv').config();
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const DBconnection = require('./config/DBconnection');
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
 
 DBconnection();
 const server: Express = express();
@@ -16,6 +18,11 @@ server.use(cors({
 server.use(express.json());
 server.use(cookieParser());
 server.use('/api/', require('./routes/userRoute'));
+server.use(
+    '/api/blogposts/', 
+    upload.single('file'), 
+    require('./routes/blogpostRoute'
+));
 
 
 server.listen(port, () => {
