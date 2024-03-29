@@ -47,6 +47,8 @@ export const Navbar = () => {
                     <NewPost />
                     <a onClick={logout}
                     >Logout</a>
+                    <p className="size-12 border-2 rounded-full bg-slate-600 text-white text-2xl flex items-center justify-center font-extrabold"
+                    >{username?.split('')[0]}</p>
                   </>
                 )
               }

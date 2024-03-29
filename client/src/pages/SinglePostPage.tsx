@@ -1,17 +1,20 @@
 import { Container } from "@/components/Container";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { format } from "date-fns";
 import { Link, Navigate, useParams } from "react-router-dom"
 import { FaEdit } from "react-icons/fa";
 import { MdOutlineDeleteOutline } from "react-icons/md";
+import { UserContext } from "@/context/UserContext";
 
 
 export const SinglePostPage = () => {
 
     const { id } = useParams();
     const [postInfo, setPostInfo] = useState(null);
+    const { userInfo } = useContext(UserContext);
     const [deleted, setDeleted] = useState(false);
+    const [display, setDisplay] = useState(false);
 
     useEffect(() => {
         fetch(`http://localhost:5000/api/blogposts/${id}`)
@@ -36,7 +39,10 @@ export const SinglePostPage = () => {
 
     if (!postInfo) return "";
 
-    const userInfo = null;
+    // for None User edit access
+    if (!userInfo.id === postInfo.author._id){
+        setDisplay(true)
+    }
 
     if (deleted){
         return <Navigate to={'/'} />
@@ -52,18 +58,20 @@ export const SinglePostPage = () => {
                     <h1 className="text-5xl font-bold tracking-wider"
                     >{postInfo.title}</h1>
 
-                    <div className="flex justify-between border-b-2 items-center  text-gray-600 text-lg " 
+                    <div className={`flex border-b-2 items-center  text-gray-600 text-lg
+                                    justify-between`} 
                     >
-                        <div className="flex gap-5 items-center"
+                        <div className={`flex items-center ${display ? 'justify-between': 'gap-5'}`}
                         >
-                            <time>{format(new Date(postInfo.createdAt), 'MMM d, yyyy HH:mm')}</time> |
+                            <time>{format(new Date(postInfo.createdAt), 'MMM d, yyyy HH:mm')}</time> 
+                            {display && <span>|</span>}
                             <p>By: {postInfo.author.username}</p>
                         </div>
 
                         <div className="flex items-center gap-5"
                         >
 
-                            {/* {!userInfo.id == postInfo.author._id && ( */}
+                            {userInfo.id === postInfo.author._id && (
                                 <div className="flex gap-5"
                                 >
                                     <Link to={`/edit/${postInfo._id}`}
@@ -79,7 +87,7 @@ export const SinglePostPage = () => {
                                     > <MdOutlineDeleteOutline /> Delete Post</Button>
                                     
                                 </div>
-                            {/* // )} */}
+                            )}
                         </div>
                     </div>
                 </div>
@@ -88,6 +96,12 @@ export const SinglePostPage = () => {
                     <img    src={`http://localhost:5000/${postInfo.cover}`} 
                             className="w-full max-h-[500px] bg-cover object-cover"
                     />
+                </div>
+
+                <div className="w-full bg-slate-600/50 border-l-8 border-green-700 rounded-md"
+                >
+                    <p className="text-2xl font-mono p-10 tracking-wide"
+                    >{'"'+postInfo.summary}</p>
                 </div>
 
                 <div className="space-y-8"
