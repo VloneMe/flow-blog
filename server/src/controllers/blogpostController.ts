@@ -45,23 +45,50 @@ const putBlog = asyncHandler(async (req: Request, res: Response) => {
 
         const { token } = req.cookies;
         jwt.verify(token, secret, {}, async (err: Error, infos: any) => {
-            
             if (err) throw err;
-            const {id, title, summary, content } = req.body;
+            const { id, title, summary, content } = req.body;
 
             const putData = await BlogPosts.findById(id);
             const isAuthor = JSON.stringify(putData.author) === JSON.stringify(infos.id);
 
             if (!isAuthor){
-                return res.status(400).json('You ar Not author.')
+                return res.status(400).json('You are not the author.');
             }
 
-            await putData.update({
-                title, summary, content,
+            await putData.updateOne({
+                title, 
+                summary, 
+                content,
                 cover: newPath ? newPath : putData.cover
             });
 
-            res.json({isAuthor});
+            res.json({ message: 'Blog post updated successfully.', isAuthor });
+        });
+    } else {
+        const { id, title, summary, content } = req.body;
+
+        const putData = await BlogPosts.findById(id);
+        if (!putData) {
+            return res.status(404).json({ error: 'Blog post not found.' });
+        }
+
+        const { token } = req.cookies;
+        jwt.verify(token, secret, {}, async (err: Error, infos: any) => {
+            if (err) throw err;
+
+            const isAuthor = JSON.stringify(putData.author) === JSON.stringify(infos.id);
+
+            if (!isAuthor){
+                return res.status(400).json('You are not the author.');
+            }
+
+            await putData.updateOne({
+                title, 
+                summary, 
+                content
+            });
+
+            res.json({ message: 'Blog post updated successfully.', isAuthor });
         });
     }
 });
@@ -83,8 +110,17 @@ const getBlogPostByID = asyncHandler(async (req: Request, res: Response) => {
     res.json(postBlog);
 });
 
+const deleteBlogPostByID = asyncHandler(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const deletedBlogPost = await BlogPosts.findByIdAndDelete(id);
+    res.json(deletedBlogPost);
+});
+
+
 export {
     postBlog,
     getBlogPosts,
-    getBlogPostByID
+    getBlogPostByID,
+    deleteBlogPostByID,
+    putBlog
 };

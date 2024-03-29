@@ -2,7 +2,7 @@ import { Container } from "@/components/Container";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
-import { Link, useParams } from "react-router-dom"
+import { Link, Navigate, useParams } from "react-router-dom"
 import { FaEdit } from "react-icons/fa";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 
@@ -10,7 +10,8 @@ import { MdOutlineDeleteOutline } from "react-icons/md";
 export const SinglePostPage = () => {
 
     const { id } = useParams();
-    const [postInfo, setPostInfo] = useState(null)
+    const [postInfo, setPostInfo] = useState(null);
+    const [deleted, setDeleted] = useState(false);
 
     useEffect(() => {
         fetch(`http://localhost:5000/api/blogposts/${id}`)
@@ -22,9 +23,24 @@ export const SinglePostPage = () => {
         })
     }, []);
 
+    const deletePost = async () => {
+        const res = await fetch(`http://localhost:5000/api/blogposts/${id}`, {
+            method: 'DELETE',
+        });
+
+        if (res.ok){
+            alert("Post Succesfully Deleted!")
+            setDeleted(true);
+        }
+    }
+
     if (!postInfo) return "";
 
     const userInfo = null;
+
+    if (deleted){
+        return <Navigate to={'/'} />
+    }
 
     return (
         <section className="my-24"
@@ -57,12 +73,11 @@ export const SinglePostPage = () => {
                                         > <FaEdit /> Edit Post</Button>
                                     </Link>
 
-                                    <Link to={`/edit/${postInfo._id}`}
-                                            className=""
-                                    >
-                                        <Button className="text-lg bg-red-800 hover:bg-red-600 flex items-center gap-x-5 px-5 py-5 text-right"
-                                        > <MdOutlineDeleteOutline /> Delete Post</Button>
-                                    </Link>
+                                    
+                                    <Button     onClick={deletePost}
+                                                className="text-lg bg-red-800 hover:bg-red-600 flex items-center gap-x-5 px-5 py-5 text-right"
+                                    > <MdOutlineDeleteOutline /> Delete Post</Button>
+                                    
                                 </div>
                             {/* // )} */}
                         </div>

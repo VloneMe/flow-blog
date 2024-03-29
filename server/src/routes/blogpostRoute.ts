@@ -1,6 +1,8 @@
 import express from 'express';
 const {
-    postBlog, getBlogPosts, getBlogPostByID
+    postBlog, getBlogPosts, 
+    getBlogPostByID, deleteBlogPostByID, 
+    putBlog
 } = require('../controllers/blogpostController')
 
 
@@ -12,7 +14,8 @@ router.route("/")
 
 router.route('/:id')
 .get(getBlogPostByID)
-.put(getBlogPostByID);
+.put(putBlog)
+.delete(deleteBlogPostByID);
 
 
 module.exports = router;

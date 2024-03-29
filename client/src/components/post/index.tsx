@@ -22,13 +22,13 @@ export const Post = (
                 <Link to={`/post/${_id}`}>
                     <img    src={`http://localhost:5000/${cover}`}
                             alt=""
-                            className="rounded-md"
+                            className="rounded-md max-h-[20rem] w-full object-cover object-center"
                     />
                 </Link>
             </div>
             <div className="text-xl space-y-5 col-span-3 capitalize">
                 <Link to={`/post/${_id}`}>
-                <h2 className="text-5xl hover:text-green-700"
+                <h2 className="text-5xl hover:text-green-700 tracking-wide"
                 >{title}</h2>
                 </Link>
                 <p className="flex gap-3 justify-between border-b border-green-500 pb-3"
