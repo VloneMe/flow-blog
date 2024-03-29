@@ -40,7 +40,7 @@ const postLoginUser = asyncHandler(async (req: Request, res: Response) => {
 // This checks if the user is logged in
 const checkProfile = asyncHandler(async (req: Request, res: Response) => {
     const { token } = req.cookies;
-    jwt.verify(token, secret, {}, (err: object, infos: object) => {
+    jwt.verify(token, secret, {}, (err: any, infos: any) => {
         if (err) throw err;
         res.json(infos);
     })

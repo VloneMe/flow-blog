@@ -35,6 +35,7 @@ export const  PostForm = () => {
     const res = await fetch('http://localhost:5000/api/blogposts/', {
       method: 'POST',
       body: data,
+      credentials: 'include'
     });
 
     if (res.ok){

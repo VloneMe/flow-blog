@@ -30,7 +30,7 @@ export const Navbar = () => {
   const username = userInfo?.username;
 
   return (
-    <nav className="w-full h-[70px] border-b-2 bg-white border-gray-200 flex items-center fixed left-0 top-0 "
+    <nav className="w-full h-[70px] border-b-2 bg-white border-gray-200 flex items-center fixed left-0 top-0 z-10"
     >
         <Container className="flex justify-between items-center"
         >

@@ -1,17 +1,18 @@
 import { Link } from "react-router-dom"
 import { Container } from "../Container";
+import { format } from "date-fns";
 
 interface Props {
-    _id: number;
+    _id: string;
     title: string;
     author: string;
     summary: string;
-    src: string;
-    date: string;
+    cover: string;
+    createdAt: string;
 }
 
 export const Post = (
-    {_id, title, author, summary, src, date}: Props
+    {_id, title, author, summary, cover, createdAt}: Props
 ) => {
   return (
     <Container className="w-full border-b pb-5"
@@ -19,9 +20,10 @@ export const Post = (
         <div className="gap-5 grid grid-cols-5">
             <div className="col-span-2 rounded-lg">
                 <Link to={`/post/${_id}`}>
-                <img src={src} alt=""
-                        className=" rounded-md"
-                />
+                    <img    src={`http://localhost:5000/${cover}`}
+                            alt=""
+                            className="rounded-md"
+                    />
                 </Link>
             </div>
             <div className="text-xl space-y-5 col-span-3 capitalize">
@@ -31,8 +33,8 @@ export const Post = (
                 </Link>
                 <p className="flex gap-3 justify-between border-b border-green-500 pb-3"
                 >
-                <a className="author">{author}</a>
-                <time>{date}</time>
+                <a className="author">{author.username}</a>
+                <time>{format(new Date(createdAt), 'MMM d, yyyy HH:mm')}</time>
                 </p>
                 <p className="text-lg"
                 >{summary}</p>
@@ -40,4 +42,4 @@ export const Post = (
         </div>
     </Container>
   )
-}
+};
