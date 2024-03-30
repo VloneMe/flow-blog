@@ -3,6 +3,7 @@ import { Container } from "../components/Container"
 import { Button } from "../components/ui/button"
 import { Input } from "../components/ui/input"
 import { Navigate } from "react-router-dom"
+import { FaEye, FaEyeSlash } from "react-icons/fa6"
 
 
 export const Login = () => {
@@ -10,6 +11,7 @@ export const Login = () => {
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [redirect, setRedirect] = useState(false);
+    const [showPwd, setShowPwd] = useState(false);
 
     const Login = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -42,15 +44,27 @@ export const Login = () => {
                 >Login Page</h2>
 
                 <Input  type="text"
-                        placeholder="username"
+                        placeholder="Username or Email"
                         value={username}
                         onChange={e => setUserName(e.target.value)}
                 />
-                <Input  type="password"
-                        placeholder="password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                />
+
+                <div className="relative flex items-center"
+                >
+                    <Input  type={showPwd ? 'text' : 'password'}
+                            placeholder="Password"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                            required
+                            className="placeholder:ml-8"
+                    />
+
+                    <div    onClick={() => setShowPwd(!showPwd)}    
+                            className="absolute right-5"
+                    >
+                        {!showPwd ? <FaEye /> : <FaEyeSlash />}
+                    </div>
+                </div>
 
                 <Button className="w-full"
                 >Login</Button>
@@ -58,4 +72,4 @@ export const Login = () => {
         </Container>
     </section>
   )
-}
+};

@@ -3,6 +3,7 @@ import { Container } from "../Container";
 import { useContext, useEffect } from "react";
 import { NewPost } from "../common/NewPost";
 import { UserContext } from "@/context/UserContext";
+import { IoIosLogOut } from "react-icons/io";
 
 
 export const Navbar = () => {
@@ -45,10 +46,16 @@ export const Navbar = () => {
                 username && (
                   <>
                     <NewPost />
-                    <a onClick={logout}
-                    >Logout</a>
                     <p className="size-12 border-2 rounded-full bg-slate-600 text-white text-2xl flex items-center justify-center font-extrabold"
                     >{username?.split('')[0]}</p>
+
+                    <div className="flex gap-2 items-center text-lg"
+                    >
+                    <a onClick={logout}
+                    >Logout</a> 
+                    <IoIosLogOut size={30}
+                    />
+                    </div>
                   </>
                 )
               }

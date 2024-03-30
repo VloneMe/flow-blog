@@ -15,6 +15,7 @@ export const SinglePostPage = () => {
     const { userInfo } = useContext(UserContext);
     const [deleted, setDeleted] = useState(false);
     const [display, setDisplay] = useState(false);
+    
 
     useEffect(() => {
         fetch(`http://localhost:5000/api/blogposts/${id}`)
@@ -42,6 +43,7 @@ export const SinglePostPage = () => {
     // for None User edit access
     if (!userInfo.id === postInfo.author._id){
         setDisplay(true)
+        return <Navigate to={'/'} />
     }
 
     if (deleted){
@@ -64,7 +66,7 @@ export const SinglePostPage = () => {
                         <div className={`flex items-center ${display ? 'justify-between': 'gap-5'}`}
                         >
                             <time>{format(new Date(postInfo.createdAt), 'MMM d, yyyy HH:mm')}</time> 
-                            {display && <span>|</span>}
+                            {!display && <span>|</span>}
                             <p>By: {postInfo.author.username}</p>
                         </div>
 
