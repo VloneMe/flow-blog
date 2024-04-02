@@ -32,6 +32,7 @@ server.use(
     upload.single('file'),
     require('./src/routes/blogpostRoute'
 ));
+server.use('/api/comments/', require('./src/routes/commentsRoute'));
 
 // Start server
 server.listen(port, () => {

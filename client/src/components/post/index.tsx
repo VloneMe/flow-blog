@@ -15,10 +15,10 @@ export const Post = (
     {_id, title, author, summary, cover, createdAt}: Props
 ) => {
   return (
-    <Container className="w-full border-b pb-5"
+    <Container className="w-full border-b pb-5 shadow-lg rounded-lg"
     >
-        <div className="gap-5 grid grid-cols-5">
-            <div className="col-span-2 rounded-lg">
+        <div className="gap-5 grid lg:grid-cols-5">
+            <div className="lg:col-span-2 rounded-lg">
                 <Link to={`/post/${_id}`}>
                     <img    src={`http://localhost:5000/${cover}`}
                             alt=""
@@ -26,9 +26,9 @@ export const Post = (
                     />
                 </Link>
             </div>
-            <div className="text-xl space-y-5 col-span-3 capitalize">
+            <div className="text-xl space-y-5 lg:col-span-3 capitalize">
                 <Link to={`/post/${_id}`}>
-                <h2 className="text-5xl hover:text-green-700 tracking-wide"
+                <h2 className="text-4xl font-bold hover:text-green-700 tracking-wide"
                 >{title}</h2>
                 </Link>
                 <p className="flex gap-3 justify-between border-b border-green-500 pb-3"

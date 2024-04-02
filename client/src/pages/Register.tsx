@@ -103,23 +103,23 @@ export const Register = () => {
                         <div    onClick={() => setShowPwd(!showPwd)}    
                                 className="absolute right-5"
                         >
-                            {!showPwd ? <FaEye /> : <FaEyeSlash />}
+                            {!(showPwd && password !== "") ? <FaEye /> : <FaEyeSlash />}
                         </div>
                     </div>
 
                     <div className="relative flex items-center"
                     >
-                        <Input  type={showPwd ? 'text' : 'password'}
+                        <Input  type={showPwd1 ? 'text' : 'password'}
                                 placeholder="Confirm password"
                                 value={confirmPassword}
                                 onChange={e => setConfirmPassword(e.target.value)}
                                 required
                         />
 
-                        <div    onClick={() => setShowPwd(!showPwd)}    
+                        <div    onClick={() => setShowPwd1(!showPwd1)}    
                                 className="absolute right-5"
                         >
-                            {!showPwd1 ? <FaEye /> : <FaEyeSlash />}
+                            {!(showPwd1 && confirmPassword !== "") ? <FaEye /> : <FaEyeSlash />}
                         </div>
                     </div>
 

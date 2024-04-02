@@ -24,7 +24,7 @@ export const PostPage = () => {
       });
   }, []);
   return (
-    <div className="space-y-6 mt-24">
+    <div className="md:space-y-10 space-y-8 mt-24">
       {posts.length > 0 && posts.map((post, index) => (
         <Post key={index + 1} {...post}
         />

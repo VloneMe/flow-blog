@@ -41,13 +41,19 @@ export const SinglePostPage = () => {
     if (!postInfo) return "";
 
     // for None User edit access
-    if (!userInfo.id === postInfo.author._id){
-        setDisplay(true)
-        return <Navigate to={'/'} />
+    if ((!(userInfo && userInfo.id) === postInfo.author._id)) {
+        setDisplay(true);
+        return <Navigate to={'/'} />;
+        useEffect(() => {
+            window.location.reload();
+        }, [])
     }
 
     if (deleted){
         return <Navigate to={'/'} />
+        useEffect(() => {
+            window.location.reload();
+        }, [])
     }
 
     return (
@@ -67,7 +73,8 @@ export const SinglePostPage = () => {
                         >
                             <time>{format(new Date(postInfo.createdAt), 'MMM d, yyyy HH:mm')}</time> 
                             {!display && <span>|</span>}
-                            <p>By: {postInfo.author.username}</p>
+                            <p className="capitalize"
+                            >By: {postInfo.author.username}</p>
                         </div>
 
                         <div className="flex items-center gap-5"

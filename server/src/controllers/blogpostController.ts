@@ -19,13 +19,14 @@ const postBlog = asyncHandler(async (req: Request, res: Response) => {
             if (err) {
                 throw err;
             }
-            const { title, summary, content } = req.body;
+            const { title, summary, content, categories, tags } = req.body;
             const blogpost = await BlogPosts.create({
                 title,
                 summary,
                 content,
                 cover: newPath,
-                author: infos.id
+                author: infos.id,
+                categories, tags
             });
             res.json(blogpost);
         });
@@ -46,7 +47,7 @@ const putBlog = asyncHandler(async (req: Request, res: Response) => {
         const { token } = req.cookies;
         jwt.verify(token, secret, {}, async (err: Error, infos: any) => {
             if (err) throw err;
-            const { id, title, summary, content } = req.body;
+            const { id, title, summary, content, categories, tags } = req.body;
 
             const putData = await BlogPosts.findById(id);
             const isAuthor = JSON.stringify(putData.author) === JSON.stringify(infos.id);
@@ -59,13 +60,14 @@ const putBlog = asyncHandler(async (req: Request, res: Response) => {
                 title, 
                 summary, 
                 content,
-                cover: newPath ? newPath : putData.cover
+                cover: newPath ? newPath : putData.cover,
+                categories, tags
             });
 
             res.json({ message: 'Blog post updated successfully.', isAuthor });
         });
     } else {
-        const { id, title, summary, content } = req.body;
+        const { id, title, summary, content, categories, tags } = req.body;
 
         const putData = await BlogPosts.findById(id);
         if (!putData) {
@@ -85,7 +87,8 @@ const putBlog = asyncHandler(async (req: Request, res: Response) => {
             await putData.updateOne({
                 title, 
                 summary, 
-                content
+                content,
+                categories, tags
             });
 
             res.json({ message: 'Blog post updated successfully.', isAuthor });

@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react"
+import { FormEvent, useEffect, useState } from "react"
 import { Container } from "../components/Container"
 import { Button } from "../components/ui/button"
 import { Input } from "../components/ui/input"
@@ -32,6 +32,9 @@ export const Login = () => {
 
     if (redirect){
         return <Navigate to={'/'}/>
+        useEffect(() => {
+            window.location.reload()
+        })
     }
   return (
     <section className="min-h-screen w-full flex items-center">
@@ -56,13 +59,13 @@ export const Login = () => {
                             value={password}
                             onChange={e => setPassword(e.target.value)}
                             required
-                            className="placeholder:ml-8"
+                            className=""
                     />
 
                     <div    onClick={() => setShowPwd(!showPwd)}    
                             className="absolute right-5"
                     >
-                        {!showPwd ? <FaEye /> : <FaEyeSlash />}
+                        {!(showPwd && password !== "") ? <FaEye /> : <FaEyeSlash />}
                     </div>
                 </div>
 
