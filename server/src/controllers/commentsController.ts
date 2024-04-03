@@ -5,7 +5,10 @@ const Comments = require('../models/commentsModel');
 
 const postComment = asyncHandler(async (req: Request, res: Response) => {
     try {
-        const comment = await Comments.create(req.body);
+        const {content, author, postId} = req.body
+        const comment = await Comments.create({
+            content, author, post: postId
+        });
         res.status(201).json(comment);
     } catch (err: any) {
         res.status(400).json({ message: err.message });

@@ -1,21 +1,20 @@
 import express, {Response, Request} from 'express';
-const asyncHandler = require('express-async-handler');
 const {
     getComments, postComment, putComment, deleteComment
-} = require('../models/commentsModel');
+} = require('../controllers/commentsController');
 
 
 
 const router = express.Router();
 
 
-router.route('/')
+router.route('/:id')
 .post(postComment)
-.get(getComments);
+.get(getComments)
 
 router.route('/:id')
 .put(putComment)
-.delete(deleteComment);
+.delete(deleteComment)
 
 
 module.exports = router;

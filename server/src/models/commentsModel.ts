@@ -4,8 +4,9 @@ export default mongoose;
 
 const CommentSchema = mongoose.Schema({
     content: { type: String, required: true },
-    author: {type: Schema.Types.ObjectId, ref: 'User', required: true},
-    post: { type: Schema.Types.ObjectId, ref: 'BlogPost', required: true }
+    author: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    post: { type: mongoose.Schema.Types.ObjectId, ref: 'BlogPost'},
+    likes: { type: Number, default: 0 }
 }, { timestamps: true });
 
 
