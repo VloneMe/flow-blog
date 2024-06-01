@@ -12,9 +12,9 @@ export const useGetUserInfos = async () => {
     const [userData, setUserData] = useState();
 
     await fetch('http://localhost:5000/api/users/')
-    .then(res: Response => {
+    .then((res: Response) => {
         res.json()
-        .then(data: data => {
+        .then((data) => {
             setUserData(data)
         })
     })

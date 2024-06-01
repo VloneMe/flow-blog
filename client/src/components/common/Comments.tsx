@@ -60,7 +60,7 @@ const Comments = ({ postId, postInfo }: Props) => {
             }
             const data = await res.json();
             setUsers(data);
-        } catch (err) {
+        } catch (err: any) {
             setError(err?.message);
         }
     };
