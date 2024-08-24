@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   # MongoDb Service
-  mongo_db: 
+  mongo_db1: 
     image: mongo:latest
     restart: always
     ports:
@@ -10,8 +10,10 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: secret
-    # volumes:
-    #   - mongo_db:/data/db
+    volumes:
+      - mongo_db:/data/db
+    networks:
+      - app-network
   
   mongodb-express:
     image: mongo-express
@@ -21,24 +23,32 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: admin
       ME_CONFIG_MONGODB_ADMINPASSWORD: secret
-      ME_CONFIG_MONGODB_SERVER: mongo_db
+      ME_CONFIG_MONGODB_SERVER: mongo_db1
       ME_CONFIG_BASICAUTH: true
+    networks:
+      - app-network
 
   api-server:
     build: ./server/
     ports:
-      - 4000:3000
-    env_file:
-      - ./server/.env
+      - 5000:5000
     depends_on:
-      - mongo_db
+      - mongo_db1
+    networks:
+      - app-network
 
   client:
     build: ./client/
     ports:
       - 8080:8080
-    # depends_on:
-    #   - api-server
+    depends_on:
+      - api-server
+    networks:
+      - app-network
 
-# volumes:
-#   mongo_db:
+volumes:
+  mongo_db:
+
+networks:
+  app-network:
+    driver: bridge

@@ -11,8 +11,8 @@ DBconnection();
 
 // Create Express server
 const server: Express = express();
-const port = process.env.PORT || 3000; 
-const clientPort = 5173;
+const port = process.env.PORT || 5000; 
+const clientPort = 8080;
 
 // Middleware
 server.use(cors({
